@@ -1,5 +1,5 @@
 // t.me/DunkerLikeWebApp_bot
-// https://shsq.ru/dunkerwebapp
+// https://shsq.ru/durgerwebapp
 // https://habr.com/ru/post/666278/?ysclid=l6ynrep1vy299391856
 
 package main
