@@ -1,0 +1,146 @@
+// t.me/DunkerLikeWebApp_bot
+// https://shsq.ru/dunkerwebapp
+// https://habr.com/ru/post/666278/?ysclid=l6ynrep1vy299391856
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+)
+
+type getUpdatesT struct {
+	Ok     bool            `json:"ok"`
+	Result []getUpdResultT `json:"result"`
+}
+type getUpdResultT struct {
+	UpdateID int        `json:"update_id"`
+	Message  getUpdMsgT `json:"message,omitempty"`
+}
+type getUpdMsgT struct {
+	MessageID int `json:"message_id"`
+	From      struct {
+		ID           int    `json:"id"`
+		IsBot        bool   `json:"is_bot"`
+		FirstName    string `json:"first_name"`
+		LastName     string `json:"last_name"`
+		Username     string `json:"username"`
+		LanguageCode string `json:"language_code"`
+	} `json:"from"`
+	Chat struct {
+		ID        int    `json:"id"`
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+		Username  string `json:"username"`
+		Type      string `json:"type"`
+	} `json:"chat"`
+	Date     int    `json:"date"`
+	Text     string `json:"text"`
+	Entities []struct {
+		Offset int    `json:"offset"`
+		Length int    `json:"length"`
+		Type   string `json:"type"`
+	} `json:"entities,omitempty"`
+}
+
+const (
+	getUpdates  = "getUpdates"
+	getMe       = "getMe"
+	sendMessage = "sendMessage"
+)
+
+var (
+	offset = 0
+)
+
+func main() {
+	file, _ := os.Open("token.txt")
+	data := make([]byte, 46)
+	file.Read(data)
+
+	token := string(data)
+	link := newLinker()
+
+	for {
+		body, err := fire(link(
+			token,
+			getUpdates, &map[string]string{
+				"offset": strconv.Itoa(offset),
+			}))
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		upd := getUpdatesT{}
+		err = json.Unmarshal(body, &upd)
+		if err != nil {
+			log.Fatalln(err)
+			return
+		}
+
+		if len(upd.Result) == 0 {
+			continue
+		}
+
+		last := upd.Result[len(upd.Result)-1]
+		offset = last.UpdateID + 1
+
+		fmt.Println(upd)
+		fire(link(
+			token,
+			sendMessage, &map[string]string{
+				"chat_id": strconv.Itoa(last.Message.Chat.ID),
+				"text":    "Hi!",
+				"reply_markup": 
+			}))
+	}
+}
+
+func newLinker() func(string, string, *map[string]string) string {
+	const baseUrl = "https://api.telegram.org/bot"
+	return func(token string, method string, body *map[string]string) string {
+		url := baseUrl + token + "/" + method
+
+		if body != nil {
+			url += "?"
+			params := []string{}
+			for key, value := range *body {
+				params = append(params, key+"="+value)
+			}
+
+			url += strings.Join(params, "&")
+		}
+		return url
+	}
+}
+
+func fire(url string) ([]byte, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return []byte{}, err
+	}
+
+	return body, nil
+}
+
+
+func keyboard(layout [][]string) string {
+	kb := map[string]map[string]string{
+		"keyboard": layout
+	}
+	return 
+}
