@@ -1,0 +1,105 @@
+/* main */
+body {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100vh;
+}
+section {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: var(--tg-theme-secondary-bg-color);
+}
+
+
+/* galery */
+.app-gallery {
+    max-width: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-y: scroll;
+}
+.app-gallery-card {
+    width: 200px;
+    height: 120px;
+}
+.app-gallery-card input {
+    display: none;
+}
+.app-gallery-card label {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-position: center;
+    background-size: cover;
+    background-clip: content-box;
+    box-sizing: border-box;
+    padding: 6px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.app-gallery-card input:checked ~ label {
+    border: solid 3px var(--tg-theme-button-color);
+    padding: 0px;
+}
+
+
+/* canvas */
+.layers {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background-color: var(--tg-theme-bg-color);
+    margin-bottom: 14px;
+}
+canvas {
+    width: 500px;
+    height: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#bg-canvas {
+    z-index: 0;
+}
+#draw-canvas {
+    z-index: 1;
+}
+
+input {
+    font-family: var(--default-font);
+    width: 100%;
+    background-color: var(--tg-theme-bg-color);
+    color: var(--tg-theme-text-color);
+    padding: 10px;
+    box-sizing: border-box;
+    display: block;
+    outline: none;
+    border: none;
+}
+
+
+/* compile */
+.resultImage {
+    width: 100%;
+    height: 400px;
+    position: relative;
+    background-color: var(--tg-theme-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultImage img {
+    width: 500px;
+    height: 400px;
+}

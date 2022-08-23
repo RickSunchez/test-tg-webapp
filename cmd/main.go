@@ -5,6 +5,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"telegram/internal/api"
@@ -29,12 +30,13 @@ func main() {
 			continue
 		}
 
+		fmt.Println(answer)
 		l := len(answer.Result) - 1
 		bot.Offset = answer.Result[l].UpdateID + 1
 
 		kb := keyboard.NewInlineKeyboard()
 		kb.NewRow(
-			keyboard.WebAppButton("app", "https://shsq.ru/dunkerwebapp"),
+			keyboard.WebAppButton("app", "https://shsq.ru/durgerwebapp"),
 		)
 		view := kb.View()
 

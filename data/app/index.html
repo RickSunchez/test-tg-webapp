@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Document</title>
+
+    <script src="scripts/reveal.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="scripts/scripts.js"></script>
+
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/reveal.css">
+    <link rel="stylesheet" href="styles/theme/black.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section class="container">
+            <section id="galery">
+                <div class="app-gallery">    
+                </div>
+            </section>
+            <section id="canvas">
+                <div class="layers">
+                    <canvas id="bg-canvas"></canvas>
+                    <canvas id="draw-canvas"></canvas>
+                </div>
+                <input type="text" id="sign" placeholder="Image sign">
+            </section>
+            <section id="compile">
+                <div class="resultImage">
+                    <img id="result">
+                </div>
+            </section>
+        </section>
+    </div>
+</div>
+<script src="scripts/galery.js"></script>
+<script src="scripts/canvas.js"></script>
+<script src="scripts/compile.js"></script>
+<script>
+    // https://core.telegram.org/bots/webapps
+    // https://revealjs.com/config/
+    Reveal.initialize({
+        hash: false,
+        history: true,
+        controls: false,
+        progress: false,
+        disableLayout: true,
+        center: true,
+        touch: false,
+        loop: false,
+        autoPlayMedia: false,
+        mouseWheel: false,
+        display: "flex",
+        keyboard: false,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        // plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+    });
+
+    initGallery();
+</script>
+</body>
+</html>

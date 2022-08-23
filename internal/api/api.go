@@ -60,6 +60,8 @@ func (b Bot) GetUpdates() (tgtypes.GetUpdatesT, error) {
 		return tgtypes.GetUpdatesT{}, nil
 	}
 
+	fmt.Println(string(resp))
+
 	answer := tgtypes.GetUpdatesT{}
 	err = json.Unmarshal(resp, &answer)
 	if err != nil {
@@ -80,7 +82,6 @@ func (b Bot) SendMessage(chatId int, text string, replyMarkup *string) error {
 
 	url := urlConstructor(b.Url, sendMessage, &get)
 
-	fmt.Println(url)
 	_, err := request(url)
 	if err != nil {
 		return err

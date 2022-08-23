@@ -49,4 +49,8 @@ type GetUpdatesMessageT struct {
 		Length int    `json:"length"`
 		Type   string `json:"type"`
 	} `json:"entities,omitempty"`
+	WebAppData []struct {
+		Data       string `json:"data"`
+		ButtonText string `json:"button_text"`
+	} `json:"web_app_data,omitempty"`
 }
